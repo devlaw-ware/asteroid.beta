@@ -25,7 +25,7 @@ typedef enum tamanho_asteroid {
 typedef struct asteroidgame {
     bool ativado;          // Indica se o asteroide está ativo (true) ou não (false)
 
-    
+
     Vector2 posicao;       // Posição atual do asteroide no espaço 2D
     float rotacao;         // Ângulo de rotação atual do asteroide
     float velrotacao;      // Velocidade angular (quanto gira por unidade de tempo)
@@ -46,3 +46,5 @@ asteroidgame Criacao_dos_asteroids(Vector2 posicao, Vector2 velocidade) {
 }
 
 #endif  // Fim do include guard ASTEROID_H_
+
+//teste
