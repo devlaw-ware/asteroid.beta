@@ -1,87 +1,48 @@
-{
-  "workbench.colorTheme": "Cybertech",
+// Pergunta ao compilador: "Essa macro ASTEROID_H_ já foi definida?"
+// Se NÃO foi definida, executa o código abaixo.
+#ifndef ASTEROID_H_
 
-  "workbench.colorCustomizations": {
-    "editor.background": "#f4efe7",          // fundo claro pastel bege
-    "editor.foreground": "#3E3232",          // texto geral marrom escuro
-    "editor.selectionBackground": "#d7c9b6",// seleção bege claro
-    "editorLineNumber.foreground": "#a89984",// números das linhas marrom claro
-    "sideBar.background": "#e9e2d0",         // barra lateral bege pastel
-    "sideBar.foreground": "#5a4d41",         // texto da barra lateral marrom suave
-    "activityBar.background": "#d9cbbf",     // barra de atividade bege médio
-    "activityBar.foreground": "#5a4d41",     // texto da barra de atividade marrom suave
-    "titleBar.activeBackground": "#d9cbbf",  // barra de título bege médio
-    "titleBar.activeForeground": "#5a4d41",  // texto da barra de título marrom suave
-    "panel.background": "#e9e2d0",            // fundo do painel bege pastel
-    "panel.border": "#b9a88c"                 // borda do painel marrom claro
-  },
+// Define a macro ASTEROID_H_ para evitar múltiplas inclusões deste arquivo.
+#define ASTEROID_H_
 
-  "editor.tokenColorCustomizations": {
-    "[Cybertech]": {
-      "textMateRules": [
-        {
-          "scope": "source",
-          "settings": {
-            "foreground": "#3E3232"             // cor do texto geral marrom escuro
-          }
-        },
-        {
-          "scope": "entity.name.function, support.function, meta.function-call",
-          "settings": {
-            "foreground": "#D9E2A8"             // cor das funções verde pastel suave
-          }
-        },
-        {
-          "scope": "keyword",
-          "settings": {
-            "foreground": "#b08b6a"             // palavras-chave marrom claro
-          }
-        },
-        {
-          "scope": "string",
-          "settings": {
-            "foreground": "#d6b89b"             // strings bege amarronzado
-          }
-        },
-        {
-          "scope": "variable",
-          "settings": {
-            "foreground": "#7a6f64"             // variáveis marrom acinzentado
-          }
-        },
-        {
-          "scope": "constant.numeric",
-          "settings": {
-            "foreground": "#b48a72"             // números marrom suave
-          }
-        },
-        {
-          "scope": "comment",
-          "settings": {
-            "foreground": "#a89984",            // comentários marrom pastel
-            "fontStyle": "italic"
-          }
-        },
-        {
-          "scope": "type",
-          "settings": {
-            "foreground": "#a17c6b"             // tipos marrom médio
-          }
-        }
-      ]
-    }
-  },
+// Inclui a biblioteca raylib, usada para gráficos e vetores.
+#include "raylib.h"
+#include "stdio.h"
+#include "stdlib.h"  // para rand()
 
-  "editor.semanticTokenColorCustomizations": {
-    "[Cybertech]": {
-      "enabled": true,
-      "rules": {
-        "variable": "#7a6f64",
-        "parameter": "#7a6f64",
-        "property": "#7a6f64",
-        "variable.readonly": "#7a6f64",
-        "type": "#a17c6b"
-      }
-    }
-  }
+// Define um enum para os tamanhos dos asteroides.
+// Cada valor representa um tamanho diferente.
+typedef enum tamanho_asteroid {
+    asteroid_p = 1,  // pequeno
+    asteroid_m = 2,  // médio
+    asteroid_g = 4   // grande
+} tamanho_asteroid;
+
+#define velocidade_asteroid_min 5
+#define velocidade_asteroid_max 240
+
+// Define a estrutura que representa um asteroide no jogo.
+typedef struct asteroidgame {
+    bool ativado;          // Indica se o asteroide está ativo (true) ou não (false)
+
+    
+    Vector2 posicao;       // Posição atual do asteroide no espaço 2D
+    float rotacao;         // Ângulo de rotação atual do asteroide
+    float velrotacao;      // Velocidade angular (quanto gira por unidade de tempo)
+    Vector2 velocidade;    // Velocidade linear do asteroide (direção e magnitude)
+} asteroidgame;
+
+// Função que cria e inicializa um asteroide com posição e velocidade dadas
+asteroidgame Criacao_dos_asteroids(Vector2 posicao, Vector2 velocidade) {
+    asteroidgame movimentacao;
+
+    movimentacao.ativado = true;                       // Ativa o asteroide
+    movimentacao.posicao = posicao;                    // Define a posição inicial
+    movimentacao.velocidade = velocidade;              // Define a velocidade inicial
+    movimentacao.rotacao = rand() % 360;               // Rotação aleatória entre 0 e 359 graus
+    movimentacao.velrotacao = GetRandomValue(velocidade_asteroid_min, velocidade_asteroid_max);
+
+    return movimentacao;  // Retorna o asteroide criado
 }
+
+#endif  // Fim do include guard ASTEROID_H_
